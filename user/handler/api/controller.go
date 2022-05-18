@@ -1,0 +1,190 @@
+package userAPI
+
+import (
+	"fmt"
+	"net/http"
+	"strconv"
+
+	"github.com/Jiran03/gudhani/user/domain"
+	"github.com/go-playground/validator/v10"
+	"github.com/labstack/echo/v4"
+)
+
+type UserHandler struct {
+	service    domain.Service
+	validation *validator.Validate
+}
+
+func NewUserHandler(service domain.Service) UserHandler {
+	return UserHandler{
+		service:    service,
+		validation: validator.New(),
+	}
+}
+
+func (uh UserHandler) HealthCheck(ctx echo.Context) error {
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success",
+		"rescode": 200,
+	})
+}
+
+func (uh UserHandler) Register(ctx echo.Context) error {
+	var req RequestJSON
+	ctx.Bind(&req)
+	errVal := uh.validation.Struct(req)
+
+	if errVal != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": errVal.Error(),
+			"rescode": http.StatusBadRequest,
+		})
+	}
+
+	userRes, err := uh.service.InsertData(toDomain(req))
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+			"rescode": http.StatusInternalServerError,
+		})
+	}
+
+	userObj := fromDomain(userRes)
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success",
+		"rescode": 200,
+		"data":    userObj,
+	})
+}
+
+func (uh UserHandler) Login(ctx echo.Context) error {
+	var req RequestLoginJSON
+	ctx.Bind(&req)
+	fmt.Println(req)
+	errVal := uh.validation.Struct(req)
+
+	if errVal != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": errVal.Error(),
+			"rescode": http.StatusBadRequest,
+		})
+	}
+
+	email := req.Email
+	password := req.Password
+	token, err := uh.service.CreateToken(email, password)
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+			"rescode": http.StatusInternalServerError,
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success",
+		"rescode": 200,
+		"token":   token,
+	})
+}
+
+func (uh UserHandler) Update(ctx echo.Context) error {
+	var req RequestJSON
+	ctx.Bind(&req)
+	id, _ := strconv.Atoi(ctx.Param("id"))
+	errVal := uh.validation.Struct(req)
+
+	if errVal != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": errVal.Error(),
+			"rescode": http.StatusBadRequest,
+		})
+	}
+
+	userRes, err := uh.service.UpdateData(id, toDomain(req))
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+			"rescode": http.StatusInternalServerError,
+		})
+	}
+
+	userObj := fromDomain(userRes)
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success",
+		"rescode": 200,
+		"data":    userObj,
+	})
+}
+
+func (uh UserHandler) GetAllData(ctx echo.Context) error {
+	userRes, err := uh.service.GetAllData()
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+			"rescode": http.StatusInternalServerError,
+		})
+	}
+
+	userObj := []ResponseJSON{}
+
+	for _, value := range userRes {
+		userObj = append(userObj, fromDomain(value))
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success",
+		"rescode": 200,
+		"data":    userObj,
+	})
+}
+
+func (uh UserHandler) GetByID(ctx echo.Context) error {
+	id, _ := strconv.Atoi(ctx.Param("id"))
+	userResp, err := uh.service.GetByID(id)
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+			"rescode": http.StatusInternalServerError,
+		})
+	}
+
+	userObj := fromDomain(userResp)
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success",
+		"rescode": 200,
+		"data":    userObj,
+	})
+}
+
+func (uh UserHandler) Delete(ctx echo.Context) error {
+	id, _ := strconv.Atoi(ctx.Param("id"))
+	err := uh.service.DeleteData(id)
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+			"rescode": http.StatusInternalServerError,
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success",
+		"rescode": 200,
+	})
+}
+
+func (uh UserHandler) UserRole(id int) (role string, err error) {
+	userObj, err := uh.service.GetByID(id)
+
+	if err != nil {
+		return "", err
+	}
+
+	role = userObj.Role
+	return role, err
+}
