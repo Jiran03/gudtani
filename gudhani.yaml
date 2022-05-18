@@ -1,0 +1,806 @@
+openapi: 3.0.0
+info:
+  title: GudHani-Gudang Hasil Tani
+  description: Manajemen gudang hasil tani
+  version: 1.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/jiranmuhammad7/gudhani/1.0.0
+
+tags:
+ - name: User
+ - name: Auth
+ - name: Product
+ - name: Warehouse
+ - name: Rent
+
+paths: 
+  '/user/{id}':
+    get:
+      summary: this is a get user by ID endpoint
+      security:
+        - jwtFarmer: []
+        - jwtWarehouseOwner: []
+      tags: 
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: user ID
+          required: true
+          schema:
+            type: integer
+            format: int              
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/userObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+    put:
+      summary: this is an update user endpoint
+      security:
+        - jwtFarmer: []
+        - jwtWarehouseOwner: []
+      tags: 
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: user ID
+          required: true
+          schema:
+            type: integer
+            format: int
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userUpdateReqBody"
+              
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/userObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+    delete:
+      summary: this is a delete user endpoint
+      security:
+        - jwtFarmer: []
+        - jwtWarehouseOwner: []
+      tags: 
+        - User
+      parameters:
+        - name: id
+          in: path
+          description: user ID
+          required: true
+          schema:
+            type: integer
+            format: int
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200success"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+          
+  '/register':
+    post:
+      summary: this is a register endpoint
+      tags: 
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userRegisterReqBody"   
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200success"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+
+  '/login':
+    post:
+      summary: this is a login endpoint
+      tags: 
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userLoginReqBody"              
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          token:
+                            type: string
+                            example: initokenINSmksNSNsOndoadbfN76BJJN
+        '402':
+          $ref: "#/components/responses/402badrequest"
+
+  '/product':
+    post:
+      summary: this is a create new product endpoint
+      security:
+        - jwtFarmer: []
+      tags: 
+        - Product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/productReqBody"
+              
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/productResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+          
+    get:
+      summary: this is a get all product endpoint
+      security:
+        - jwtFarmer: []
+      tags: 
+        - Product
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/productResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+      
+
+  '/product/{id}':
+    put:
+      summary: this is an update product endpoint
+      security:
+        - jwtFarmer: []
+      tags: 
+        - Product
+      parameters:
+        - name: id
+          in: path
+          description: product ID
+          required: true
+          schema:
+            type: integer
+            format: int
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/productReqBody"
+              
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/productResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+          
+    get:
+      summary: this is a get product by ID endpoint
+      security:
+        - jwtFarmer: []
+      tags: 
+        - Product 
+      parameters:
+        - name: id
+          in: path
+          description: product ID
+          required: true
+          schema:
+            type: integer
+            format: int             
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/productResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+           
+    delete:
+      summary: this is a delete product endpoint
+      security:
+        - jwtFarmer: []
+      tags: 
+        - Product
+      parameters:
+        - name: id
+          in: path
+          description: product ID
+          required: true
+          schema:
+            type: integer
+            format: int
+              
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200success"
+        '402':          
+          $ref: "#/components/responses/402badrequest"
+      
+
+  '/warehouse':
+    post:
+      summary: this is a create new warehouse endpoint
+      security:
+        - jwtWarehouseOwner: []
+      tags: 
+        - Warehouse
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/warehouseResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+          
+    get:
+      summary: this is a get all warehouse endpoint
+      security:
+        - jwtWarehouseOwner: []
+      tags: 
+        - Warehouse
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/warehouseResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+      
+  '/warehouse/{id}':
+    put:
+      summary: this is an update warehouse endpoint
+      security:
+        - jwtWarehouseOwner: []
+      tags: 
+        - Warehouse
+      parameters:
+        - name: id
+          in: path
+          description: warehouse ID
+          required: true
+          schema:
+            type: integer
+            format: int
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/warehouseReqBody"
+              
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/warehouseResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+          
+    get:
+      summary: this is a get warehouse by ID endpoint
+      security:
+        - jwtWarehouseOwner: []
+      tags: 
+        - Warehouse 
+      parameters:
+        - name: id
+          in: path
+          description: warehouse ID
+          required: true
+          schema:
+            type: integer
+            format: int             
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/warehouseResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+           
+    delete:
+      summary: this is a delete warehouse endpoint
+      security:
+        - jwtWarehouseOwner: []
+      tags: 
+        - Warehouse
+      parameters:
+        - name: id
+          in: path
+          description: warehouse ID
+          required: true
+          schema:
+            type: integer
+            format: int
+              
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200success"
+        '402':          
+          $ref: "#/components/responses/402badrequest"
+
+  '/rent':
+    post:
+      summary: this is a create new warehouse rental endpoint
+      security:
+        - jwtFarmer: []
+      tags: 
+        - Rent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/rentReqBody"
+              
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/rentResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+          
+    get:
+      summary: this is a get all warehouse rental endpoint
+      security:
+        - jwtFarmer: []
+        - jwtWarehouseOwner: []
+      tags: 
+        - Rent           
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/rentResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+      
+  '/rent/{id}':
+    get:
+      summary: this is a get warehouse rental by ID endpoint
+      security:
+        - jwtFarmer: []
+        - jwtWarehouseOwner: []
+      tags: 
+        - Rent 
+      parameters:
+        - name: id
+          in: path
+          description: warehouse rental ID
+          required: true
+          schema:
+            type: integer
+            format: int             
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/200success"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/rentResObj"
+        '402':
+          $ref: "#/components/responses/402badrequest"
+           
+
+components:
+  securitySchemes:
+    jwtFarmer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    jwtWarehouseOwner:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    userRegisterReqBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "fulan bin fulan"
+        email:
+          type: string
+          example: "fulan@mail.com"
+        password:
+          type: string
+          example: "passwordfulan"
+        address:
+          type: string
+          example: "Palu, Sulawesi Tengah"
+        gender:
+          type: string
+          enum: 
+            - "L"
+            - "P"
+          example: "L"
+        role:
+          type: string
+          enum: 
+            - "petani"
+            - "pemilik gudang"
+          example: "petani"
+   
+    userLoginReqBody:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "fulan@mail.com"
+        password:
+          type: string
+          example: "passwordfulan"
+   
+    userUpdateReqBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "fulan saja bin fulan"
+        email:
+          type: string
+          example: "fulan2@mail.com"
+        password:
+          type: string
+          example: "passwordfulan"
+        address:
+          type: string
+          example: "Palu, Sulawesi Tengah"
+        gender:
+          type: string
+          enum: 
+            - "L"
+            - "P"
+          example: "L"
+        role:
+          type: string
+          enum: 
+            - "petani"
+            - "pemilik gudang"
+          example: "petani"
+    
+    userObj:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "fulan saja bin fulan"
+        email:
+          type: string
+          example: "fulan2@mail.com"
+        password:
+          type: string
+          example: "passwordfulan"
+        address:
+          type: string
+          example: "Palu, Sulawesi Tengah"
+        gender:
+          type: string
+          enum: 
+            - "L"
+            - "P"
+          example: "L"
+        role:
+          type: string
+          enum: 
+            - "petani"
+            - "pemilik gudang"
+          example: "petani"
+        created_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+        updated_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+        deleted_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+
+    productReqBody:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 1
+        product_type:
+          type: string
+          example: "buah jeruk"
+    
+    productResObj:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 1
+        product_type:
+          type: string
+          example: "buah jeruk"
+        created_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+        updated_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+        deleted_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+    
+    warehouseReqBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Gudang Fulan Jaya"
+        id_user:
+          type: integer
+          example: 1
+        capacity:
+          type: integer
+          example: 20
+          description: "unit ton"
+        rental_price:
+          type: integer
+          example: 400000
+          description: "price per ton per day"
+        address:
+          type: string
+          example: "Palu, Sulawesi Tengah"
+
+    warehouseResObj:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Gudang Fulan Jaya"
+        id_user:
+          type: integer
+          example: 1
+        capacity:
+          type: integer
+          example: 20
+          description: "unit ton"
+        rental_price:
+          type: integer
+          example: 400000
+          description: "price per ton"
+        address:
+          type: string
+          example: "Palu, Sulawesi Tengah"
+        created_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+        updated_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+        deleted_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+    
+    rentReqBody:
+      type: object
+      properties:
+        id_product:
+          type: integer
+          example: 1
+        id_gudang:
+          type: integer
+          example: 1
+        weight:
+          type: integer
+          example: 20
+          description: "unit ton"
+        period:
+          type: integer
+          example: 14
+          description: "rental periode in days"
+    
+    rentResObj:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        id_product:
+          type: integer
+          example: 1
+        id_gudang:
+          type: integer
+          example: 1
+        weight:
+          type: integer
+          example: 20
+          description: "unit ton"
+        period:
+          type: integer
+          example: 14
+          description: "rental period in days"
+        status:
+          type: string
+          enum:
+            - "sedang dalam penyewaan"
+            - "masa sewa telah selesai"
+          example: "sedang dalam penyewaan"
+          description: "jika periode 0 maka status berubah ke masa sewa telah selesai"
+        total_price:
+          type: integer
+          example: 400000
+          description: "total price didapatkan dari harga_sewa(kali)berat(kali)periode"
+        created_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+        updated_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+        deleted_at:
+          type: string
+          example: "2022-05-03T00:00:00"
+
+    200success:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "success"
+        rescode:
+          type: number
+          example: 200
+
+  responses:
+    402badrequest:
+      description: user failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "bad request, user failure"
+              rescode:
+                type: number
+                example: 402
