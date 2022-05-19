@@ -29,7 +29,7 @@ func (us userService) CreateToken(email, password string) (token string, err err
 // InsertData implements domain.Service
 func (us userService) InsertData(domain domain.User) (userObj domain.User, err error) {
 	userObj, err = us.repository.Create(domain)
-	// errResp := errConv.Conversion(err)
+
 	if err != nil {
 		return userObj, err
 	}
@@ -70,17 +70,21 @@ func (us userService) GetByEmailPassword(email, password string) (id int, role s
 
 func (us userService) GetAllData() (userObj []domain.User, err error) {
 	userObj, err = us.repository.Get()
+
 	if err != nil {
 		return userObj, err
 	}
+
 	return userObj, nil
 }
 
 func (us userService) GetByID(id int) (userObj domain.User, err error) {
 	userObj, err = us.repository.GetByID(id)
+
 	if err != nil {
 		return userObj, errors.New("not found")
 	}
+
 	return userObj, nil
 }
 

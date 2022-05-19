@@ -111,9 +111,11 @@ func (rs rentService) UpdateData(id int, domain domain.Rent) (rentObj domain.Ren
 
 func (rs rentService) DeleteData(id int) (err error) {
 	err = rs.repository.Delete(id)
+
 	if err != nil {
-		return errConv.Conversion(err)
+		return err
 	}
+
 	return nil
 }
 

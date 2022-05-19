@@ -167,6 +167,28 @@ func TestUpdateData(t *testing.T) {
 	})
 }
 
+func TestUpdateDataCapacity(t *testing.T) {
+	warehouseService = service.NewWarehouseService(&warehouseRepo)
+	warehouseDomain = domain.Warehouse{
+		Id:       1,
+		Capacity: 10,
+	}
+
+	t.Run("DeleteData | Valid", func(t *testing.T) {
+		warehouseRepo.On("UpdateCapacity", mock.AnythingOfType("int"), mock.AnythingOfType("int")).Return(nil).Once()
+		err := warehouseService.UpdateDataCapacity(warehouseDomain.Id, warehouseDomain.Capacity)
+
+		assert.Nil(t, err)
+	})
+
+	t.Run("DeleteData | Invalid", func(t *testing.T) {
+		warehouseRepo.On("UpdateCapacity", mock.AnythingOfType("int"), mock.AnythingOfType("int")).Return(errors.New("error")).Once()
+		err := warehouseService.UpdateDataCapacity(warehouseDomain.Id, warehouseDomain.Capacity)
+
+		assert.Error(t, err)
+	})
+}
+
 func TestDeleteData(t *testing.T) {
 	warehouseService = service.NewWarehouseService(&warehouseRepo)
 	warehouseDomain = domain.Warehouse{

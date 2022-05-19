@@ -1,9 +1,6 @@
 package service
 
 import (
-	"errors"
-
-	errConv "github.com/Jiran03/gudhani/helper/error"
 	"github.com/Jiran03/gudhani/product/domain"
 )
 
@@ -17,7 +14,6 @@ func (ps productService) InsertData(domain domain.Product) (productObj domain.Pr
 	if err != nil {
 		return domain, err
 	}
-	// errResp := errConv.Conversion(err)
 
 	return productObj, nil
 }
@@ -36,7 +32,7 @@ func (ps productService) GetDataByID(id int) (productObj domain.Product, err err
 	productObj, err = ps.repository.GetByID(id)
 
 	if err != nil {
-		return productObj, errors.New(errConv.ErrDBNotFound)
+		return productObj, err
 	}
 
 	return productObj, nil
@@ -44,22 +40,28 @@ func (ps productService) GetDataByID(id int) (productObj domain.Product, err err
 
 func (ps productService) UpdateData(id int, domain domain.Product) (productObj domain.Product, err error) {
 	product, errGetByID := ps.repository.GetByID(id)
+
 	if errGetByID != nil {
 		return domain, errGetByID
 	}
+
 	productId := product.Id
 	productObj, err = ps.repository.Update(productId, domain)
+
 	if err != nil {
 		return domain, err
 	}
+
 	return productObj, nil
 }
 
 func (ps productService) DeleteData(id int) (err error) {
 	err = ps.repository.Delete(id)
+
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
