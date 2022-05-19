@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"fmt"
-
 	"github.com/Jiran03/gudhani/product/domain"
 	"gorm.io/gorm"
 )
@@ -22,7 +20,6 @@ func (pr productRepo) Create(domain domain.Product) (productObj domain.Product, 
 
 func (pr productRepo) Update(id int, domain domain.Product) (productObj domain.Product, err error) {
 	var newRecord Product
-	fmt.Println("id repo", id)
 	record := fromDomain(domain)
 	err = pr.DB.Model(&newRecord).Where("id = ?", id).Updates(map[string]interface{}{
 		"id":           id,

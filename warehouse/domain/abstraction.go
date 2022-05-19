@@ -8,6 +8,7 @@ type Service interface {
 	GetDataByID(id int) (warehouseObj Warehouse, err error)
 	GetDataByAddress(address string) (warehouseObj []Warehouse, err error)
 	UpdateData(id int, domain Warehouse) (warehouseObj Warehouse, err error)
+	UpdateDataCapacity(id, newCapacity int) (err error)
 	DeleteData(id int) (err error)
 }
 
@@ -17,5 +18,6 @@ type Repository interface {
 	Get() (warehouseObj []Warehouse, err error)
 	GetByAddress(address string) (warehouseObj []Warehouse, err error)
 	GetByID(id int) (warehouseObj Warehouse, err error)
+	UpdateCapacity(id, newCapacity int) (err error)
 	Delete(id int) (err error)
 }

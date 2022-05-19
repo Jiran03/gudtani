@@ -1,7 +1,6 @@
 package authMiddleware
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/Jiran03/gudhani/auth"
@@ -37,7 +36,6 @@ func (cJWT *ConfigJWT) GenerateToken(userID int) string {
 	}
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, _ := t.SignedString([]byte(auth.SECRET_KEY))
-	fmt.Println(token)
 	return token
 }
 

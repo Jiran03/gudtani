@@ -38,6 +38,18 @@ func (wr warehouseRepo) Update(id int, domain domain.Warehouse) (warehouseObj do
 	return warehouseObj, nil
 }
 
+func (wr warehouseRepo) UpdateCapacity(id, newCapacity int) (err error) {
+	err = wr.DB.Table("warehouses").Where("id = ?", id).Updates(map[string]interface{}{
+		"capacity": newCapacity,
+	}).Error
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (wr warehouseRepo) Get() (warehouseObj []domain.Warehouse, err error) {
 	var newRecord []Warehouse
 	err = wr.DB.Find(&newRecord).Error

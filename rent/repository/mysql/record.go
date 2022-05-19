@@ -45,11 +45,3 @@ func fromDomain(rec domain.Rent) Rent {
 		TotalPrice:  rec.TotalPrice,
 	}
 }
-
-type RentalPrice struct {
-	RentalPrice int
-}
-
-type Capacity struct {
-	Capacity int
-}

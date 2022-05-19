@@ -1,7 +1,6 @@
 package userAPI
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -61,7 +60,6 @@ func (uh UserHandler) Register(ctx echo.Context) error {
 func (uh UserHandler) Login(ctx echo.Context) error {
 	var req RequestLoginJSON
 	ctx.Bind(&req)
-	fmt.Println(req)
 	errVal := uh.validation.Struct(req)
 
 	if errVal != nil {

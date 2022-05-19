@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 
 	errConv "github.com/Jiran03/gudhani/helper/error"
 	"github.com/Jiran03/gudhani/product/domain"
@@ -53,7 +52,6 @@ func (ps productService) UpdateData(id int, domain domain.Product) (productObj d
 	if err != nil {
 		return domain, err
 	}
-	fmt.Println(productObj)
 	return productObj, nil
 }
 

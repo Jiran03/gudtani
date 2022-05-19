@@ -5,10 +5,12 @@ import (
 
 	errConv "github.com/Jiran03/gudhani/helper/error"
 	"github.com/Jiran03/gudhani/rent/domain"
+	warehouseDomain "github.com/Jiran03/gudhani/warehouse/domain"
 )
 
 type rentService struct {
-	repository domain.Repository
+	repository    domain.Repository
+	warehouseServ warehouseDomain.Service
 }
 
 func (rs rentService) InsertData(domain domain.Rent) (rentObj domain.Rent, err error) {
@@ -18,11 +20,27 @@ func (rs rentService) InsertData(domain domain.Rent) (rentObj domain.Rent, err e
 		domain.Status = "masa sewa telah selesai"
 	}
 
-	rentalPrice, errGetRentalPrice := rs.repository.GetRentalPrice(domain.WarehouseID)
+	warehouseID := domain.WarehouseID
 
-	if errGetRentalPrice != nil {
-		return rentObj, errGetRentalPrice
+	warehouseObj, err := rs.warehouseServ.GetDataByID(warehouseID)
+
+	if err != nil {
+		return rentObj, err
 	}
+
+	if warehouseObj.Capacity == 0 || warehouseObj.Capacity < domain.Weight {
+		return rentObj, errors.New("warehouse capacity is not enough")
+	}
+
+	newWarehouseCapacity := warehouseObj.Capacity - domain.Weight
+
+	errUpdateCapacity := rs.warehouseServ.UpdateDataCapacity(warehouseID, newWarehouseCapacity)
+
+	if errUpdateCapacity != nil {
+		return rentObj, errUpdateCapacity
+	}
+
+	rentalPrice := warehouseObj.RentalPrice
 
 	totalPrice := rentalPrice * domain.Weight * domain.Period
 	domain.TotalPrice = totalPrice
@@ -52,21 +70,38 @@ func (rs rentService) GetDataByID(id int) (rentObj domain.Rent, err error) {
 }
 
 func (rs rentService) UpdateData(id int, domain domain.Rent) (rentObj domain.Rent, err error) {
+
 	rent, errGetByID := rs.repository.GetByID(id)
+
 	if errGetByID != nil {
 		return domain, errGetByID
 	}
 
+	warehouseID := domain.WarehouseID
+
+	warehouseObj, err := rs.warehouseServ.GetDataByID(warehouseID)
+
+	if err != nil {
+		return rentObj, err
+	}
+
+	newWarehouseCapacity := warehouseObj.Capacity
 	domain.Status = "sedang dalam penyewaan"
-	domain.TotalPrice = rent.TotalPrice
-	domain.CreatedAt = rent.CreatedAt
 
 	if domain.Period == 0 {
+		newWarehouseCapacity += rent.Weight
 		domain.Status = "masa sewa telah selesai"
 	}
 
-	rentId := rent.ID
-	rentObj, err = rs.repository.Update(rentId, domain)
+	errUpdateCapacity := rs.warehouseServ.UpdateDataCapacity(warehouseID, newWarehouseCapacity)
+
+	if errUpdateCapacity != nil {
+		return rentObj, errUpdateCapacity
+	}
+
+	domain.TotalPrice = rent.TotalPrice
+	rentObj, err = rs.repository.Update(id, domain)
+
 	if err != nil {
 		return domain, err
 	}
@@ -82,8 +117,9 @@ func (rs rentService) DeleteData(id int) (err error) {
 	return nil
 }
 
-func NewRentService(repo domain.Repository) domain.Service {
+func NewRentService(repo domain.Repository, ws warehouseDomain.Service) domain.Service {
 	return rentService{
-		repository: repo,
+		repository:    repo,
+		warehouseServ: ws,
 	}
 }

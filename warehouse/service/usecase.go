@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 
 	errConv "github.com/Jiran03/gudhani/helper/error"
 	"github.com/Jiran03/gudhani/warehouse/domain"
@@ -58,8 +57,17 @@ func (ws warehouseService) UpdateData(id int, domain domain.Warehouse) (warehous
 	if err != nil {
 		return domain, err
 	}
-	fmt.Println(warehouseObj)
 	return warehouseObj, nil
+}
+
+func (ws warehouseService) UpdateDataCapacity(id, newWarehouseCapacity int) (err error) {
+	err = ws.repository.UpdateCapacity(id, newWarehouseCapacity)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (ws warehouseService) DeleteData(id int) (err error) {

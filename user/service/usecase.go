@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 
 	authMiddleware "github.com/Jiran03/gudhani/auth/middleware"
 	"github.com/Jiran03/gudhani/user/domain"
@@ -15,7 +14,7 @@ type userService struct {
 
 // CreateToken implements domain.Service
 func (us userService) CreateToken(email, password string) (token string, err error) {
-	fmt.Println("usecase", email, password)
+
 	userObj, err := us.repository.GetByEmailPassword(email, password)
 
 	if err != nil {
@@ -41,7 +40,6 @@ func (us userService) InsertData(domain domain.User) (userObj domain.User, err e
 // UpdateData implements domain.Service
 func (us userService) UpdateData(id int, domain domain.User) (userObj domain.User, err error) {
 	user, errGetByID := us.repository.GetByID(id)
-	fmt.Println(user)
 
 	if errGetByID != nil {
 		return user, errGetByID
@@ -62,7 +60,6 @@ func (us userService) GetByEmailPassword(email, password string) (id int, role s
 	id = userObj.ID
 	role = userObj.Role
 	err = errRepo
-	fmt.Println("ini id dan role", id, role)
 
 	if err != nil {
 		return id, role, err
