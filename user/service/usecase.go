@@ -3,8 +3,8 @@ package service
 import (
 	"errors"
 
-	authMiddleware "github.com/Jiran03/gudhani/auth/middleware"
-	"github.com/Jiran03/gudhani/user/domain"
+	authMiddleware "github.com/Jiran03/gudtani/auth/middleware"
+	"github.com/Jiran03/gudtani/user/domain"
 )
 
 type userService struct {

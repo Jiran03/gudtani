@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/Jiran03/gudhani/warehouse/domain"
+	"github.com/Jiran03/gudtani/warehouse/domain"
 	"gorm.io/gorm"
 )
 

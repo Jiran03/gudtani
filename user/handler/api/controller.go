@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Jiran03/gudhani/user/domain"
+	"github.com/Jiran03/gudtani/user/domain"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 )

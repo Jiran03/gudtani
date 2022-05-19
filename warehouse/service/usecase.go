@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/Jiran03/gudhani/warehouse/domain"
+	"github.com/Jiran03/gudtani/warehouse/domain"
 )
 
 type warehouseService struct {

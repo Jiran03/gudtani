@@ -3,7 +3,7 @@ package warehouseAPI
 import (
 	"time"
 
-	"github.com/Jiran03/gudhani/warehouse/domain"
+	"github.com/Jiran03/gudtani/warehouse/domain"
 )
 
 type RequestJSON struct {

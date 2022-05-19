@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/Jiran03/gudhani/product/domain"
+	"github.com/Jiran03/gudtani/product/domain"
 )
 
 type productService struct {

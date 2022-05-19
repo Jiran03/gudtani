@@ -3,7 +3,7 @@ package userAPI
 import (
 	"time"
 
-	"github.com/Jiran03/gudhani/user/domain"
+	"github.com/Jiran03/gudtani/user/domain"
 )
 
 type RequestJSON struct {

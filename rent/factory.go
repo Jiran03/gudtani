@@ -1,11 +1,11 @@
 package rent
 
 import (
-	rentHandlerAPI "github.com/Jiran03/gudhani/rent/handler/api"
-	rentRepositoryMySQL "github.com/Jiran03/gudhani/rent/repository/mysql"
-	rentService "github.com/Jiran03/gudhani/rent/service"
-	warehouseRepositoryMySQL "github.com/Jiran03/gudhani/warehouse/repository/mysql"
-	warehouseService "github.com/Jiran03/gudhani/warehouse/service"
+	rentHandlerAPI "github.com/Jiran03/gudtani/rent/handler/api"
+	rentRepositoryMySQL "github.com/Jiran03/gudtani/rent/repository/mysql"
+	rentService "github.com/Jiran03/gudtani/rent/service"
+	warehouseRepositoryMySQL "github.com/Jiran03/gudtani/warehouse/repository/mysql"
+	warehouseService "github.com/Jiran03/gudtani/warehouse/service"
 	"gorm.io/gorm"
 )
 

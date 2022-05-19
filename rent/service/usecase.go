@@ -3,9 +3,8 @@ package service
 import (
 	"errors"
 
-	errConv "github.com/Jiran03/gudhani/helper/error"
-	"github.com/Jiran03/gudhani/rent/domain"
-	warehouseDomain "github.com/Jiran03/gudhani/warehouse/domain"
+	"github.com/Jiran03/gudtani/rent/domain"
+	warehouseDomain "github.com/Jiran03/gudtani/warehouse/domain"
 )
 
 type rentService struct {
@@ -50,22 +49,25 @@ func (rs rentService) InsertData(domain domain.Rent) (rentObj domain.Rent, err e
 		return domain, err
 	}
 
-	// errResp := errConv.Conversion(err)
 	return rentObj, nil
 }
 func (rs rentService) GetAllData() (rentObj []domain.Rent, err error) {
 	rentObj, err = rs.repository.Get()
+
 	if err != nil {
 		return rentObj, err
 	}
+
 	return rentObj, nil
 }
 
 func (rs rentService) GetDataByID(id int) (rentObj domain.Rent, err error) {
 	rentObj, err = rs.repository.GetByID(id)
+
 	if err != nil {
-		return rentObj, errors.New(errConv.ErrDBNotFound)
+		return rentObj, err
 	}
+
 	return rentObj, nil
 }
 

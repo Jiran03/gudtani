@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/Jiran03/gudhani/warehouse/domain"
-	"github.com/Jiran03/gudhani/warehouse/domain/mocks"
-	"github.com/Jiran03/gudhani/warehouse/service"
+	"github.com/Jiran03/gudtani/warehouse/domain"
+	"github.com/Jiran03/gudtani/warehouse/domain/mocks"
+	"github.com/Jiran03/gudtani/warehouse/service"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -16,15 +16,6 @@ var (
 	warehouseService domain.Service
 	warehouseDomain  domain.Warehouse
 )
-
-// func TestMain(m *testing.M) {
-// 	warehouseService = service.NewWarehouseService(&warehouseRepo)
-// 	warehouseDomain = domain.Warehouse{
-// 		Id:          1,
-// 		UserId:      1,
-// 		WarehouseName: "buah Gudang",
-// 	}
-// }
 
 func TestInsertData(t *testing.T) {
 	warehouseService = service.NewWarehouseService(&warehouseRepo)

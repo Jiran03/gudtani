@@ -3,7 +3,7 @@ package repository
 import (
 	"time"
 
-	"github.com/Jiran03/gudhani/rent/domain"
+	"github.com/Jiran03/gudtani/rent/domain"
 	"gorm.io/gorm"
 )
 

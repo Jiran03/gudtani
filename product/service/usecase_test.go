@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/Jiran03/gudhani/product/domain"
-	"github.com/Jiran03/gudhani/product/domain/mocks"
-	"github.com/Jiran03/gudhani/product/service"
+	"github.com/Jiran03/gudtani/product/domain"
+	"github.com/Jiran03/gudtani/product/domain/mocks"
+	"github.com/Jiran03/gudtani/product/service"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )

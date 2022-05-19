@@ -1,10 +1,10 @@
 package user
 
 import (
-	authMiddleware "github.com/Jiran03/gudhani/auth/middleware"
-	userHandlerAPI "github.com/Jiran03/gudhani/user/handler/api"
-	userRepositoryMySQL "github.com/Jiran03/gudhani/user/repository/mysql"
-	userService "github.com/Jiran03/gudhani/user/service"
+	authMiddleware "github.com/Jiran03/gudtani/auth/middleware"
+	userHandlerAPI "github.com/Jiran03/gudtani/user/handler/api"
+	userRepositoryMySQL "github.com/Jiran03/gudtani/user/repository/mysql"
+	userService "github.com/Jiran03/gudtani/user/service"
 	"gorm.io/gorm"
 )
 

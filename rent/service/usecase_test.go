@@ -4,11 +4,11 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/Jiran03/gudhani/rent/domain"
-	"github.com/Jiran03/gudhani/rent/domain/mocks"
-	"github.com/Jiran03/gudhani/rent/service"
-	wareDomain "github.com/Jiran03/gudhani/warehouse/domain"
-	wareMock "github.com/Jiran03/gudhani/warehouse/domain/mocks"
+	"github.com/Jiran03/gudtani/rent/domain"
+	"github.com/Jiran03/gudtani/rent/domain/mocks"
+	"github.com/Jiran03/gudtani/rent/service"
+	wareDomain "github.com/Jiran03/gudtani/warehouse/domain"
+	wareMock "github.com/Jiran03/gudtani/warehouse/domain/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )

@@ -1,9 +1,9 @@
 package warehouse
 
 import (
-	warehouseHandlerAPI "github.com/Jiran03/gudhani/warehouse/handler/api"
-	warehouseRepositoryMySQL "github.com/Jiran03/gudhani/warehouse/repository/mysql"
-	warehouseService "github.com/Jiran03/gudhani/warehouse/service"
+	warehouseHandlerAPI "github.com/Jiran03/gudtani/warehouse/handler/api"
+	warehouseRepositoryMySQL "github.com/Jiran03/gudtani/warehouse/repository/mysql"
+	warehouseService "github.com/Jiran03/gudtani/warehouse/service"
 	"gorm.io/gorm"
 )
 

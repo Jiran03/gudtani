@@ -1,9 +1,9 @@
 package product
 
 import (
-	productHandlerAPI "github.com/Jiran03/gudhani/product/handler/api"
-	productRepositoryMySQL "github.com/Jiran03/gudhani/product/repository/mysql"
-	productService "github.com/Jiran03/gudhani/product/service"
+	productHandlerAPI "github.com/Jiran03/gudtani/product/handler/api"
+	productRepositoryMySQL "github.com/Jiran03/gudtani/product/repository/mysql"
+	productService "github.com/Jiran03/gudtani/product/service"
 	"gorm.io/gorm"
 )
 
