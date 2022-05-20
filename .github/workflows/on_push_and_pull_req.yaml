@@ -1,4 +1,4 @@
-name: "on_pull_request"
+name: "on_push_and_pull_request"
 
 on:
   pull_request:
@@ -17,7 +17,7 @@ jobs:
       mysql:
         image: mariadb:10.1
         env:
-          MYSQL_ROOT_PASSWORD: ""
+          MYSQL_ROOT_PASSWORD: tes
           MYSQL_DATABASE: gudtani
         ports:
           - 3306:3306
@@ -28,11 +28,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: running test
         env:
-          DBNAME: "tugas_go"
-          DBHOST: "mysql"
+          DBNAME: gudtani
+          DBHOST: mysql
           DBPORT: 3306
-          DBUSER: "root"
-          DBPASS: ""
+          DBUSER: root
+          DBPASS: tes
         run: |
           go mod tidy
           go test ./user/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-user.out && go tool cover -html=cover-user.out
