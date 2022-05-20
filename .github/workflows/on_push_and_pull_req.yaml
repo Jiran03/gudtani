@@ -1,0 +1,41 @@
+name: "on_pull_request"
+
+on:
+  pull_request:
+    branches:
+      - "development"
+  push:
+    branches:
+      - "development"
+
+jobs:
+  testing:
+    name: testing-api
+    runs-on: ubuntu-latest
+    container: golang:1.17
+    services:
+      mysql:
+        image: mariadb:10.1
+        env:
+          MYSQL_ROOT_PASSWORD: ""
+          MYSQL_DATABASE: gudtani
+        ports:
+          - 3306:3306
+    strategy:
+      matrix:
+        go: ["1.17"]
+    steps:
+      - uses: actions/checkout@v2
+      - name: running test
+        env:
+          DBNAME: "tugas_go"
+          DBHOST: "mysql"
+          DBPORT: 3306
+          DBUSER: "root"
+          DBPASS: ""
+        run: |
+          go mod tidy
+          go test ./user/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-user.out && go tool cover -html=cover-user.out
+          go test ./product/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-product.out && go tool cover -html=cover-product.out
+          go test ./rent/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-rent.out && go tool cover -html=cover-rent.out
+          go test ./warehouse/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-warehouse.out && go tool cover -html=cover-warehouse.out
