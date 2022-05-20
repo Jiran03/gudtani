@@ -14,9 +14,11 @@ func RoleValidation(role string, userController userAPI.UserHandler) echo.Middle
 		return func(ctx echo.Context) error {
 			claims := authMiddleware.GetUser(ctx)
 			userRole, err := userController.UserRole(claims.ID)
+
 			if err != nil {
 				return errors.New(errConv.ErrDBNotFound)
 			}
+
 			if userRole == role {
 				return hf(ctx)
 			} else {

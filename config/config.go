@@ -30,7 +30,6 @@ func Init() {
 		DBHOST: viper.GetString(`DBHOST`),
 		DBPORT: viper.GetString(`DBPORT`),
 	}
-	fmt.Printf("%+v", Conf)
 }
 
 func DBInit() (DB *gorm.DB) {

@@ -54,6 +54,7 @@ func (wh WarehouseHandler) GetDataByID(ctx echo.Context) error {
 	id, _ := strconv.Atoi(ctx.Param("id"))
 
 	warehouseResp, err := wh.service.GetDataByID(id)
+
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err.Error(),

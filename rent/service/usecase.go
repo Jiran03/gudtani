@@ -20,7 +20,6 @@ func (rs rentService) InsertData(domain domain.Rent) (rentObj domain.Rent, err e
 	}
 
 	warehouseID := domain.WarehouseID
-
 	warehouseObj, err := rs.warehouseServ.GetDataByID(warehouseID)
 
 	if err != nil {
@@ -32,7 +31,6 @@ func (rs rentService) InsertData(domain domain.Rent) (rentObj domain.Rent, err e
 	}
 
 	newWarehouseCapacity := warehouseObj.Capacity - domain.Weight
-
 	errUpdateCapacity := rs.warehouseServ.UpdateDataCapacity(warehouseID, newWarehouseCapacity)
 
 	if errUpdateCapacity != nil {
@@ -40,7 +38,6 @@ func (rs rentService) InsertData(domain domain.Rent) (rentObj domain.Rent, err e
 	}
 
 	rentalPrice := warehouseObj.RentalPrice
-
 	totalPrice := rentalPrice * domain.Weight * domain.Period
 	domain.TotalPrice = totalPrice
 	rentObj, err = rs.repository.Create(domain)
@@ -72,7 +69,6 @@ func (rs rentService) GetDataByID(id int) (rentObj domain.Rent, err error) {
 }
 
 func (rs rentService) UpdateData(id int, domain domain.Rent) (rentObj domain.Rent, err error) {
-
 	rent, errGetByID := rs.repository.GetByID(id)
 
 	if errGetByID != nil {
@@ -80,7 +76,6 @@ func (rs rentService) UpdateData(id int, domain domain.Rent) (rentObj domain.Ren
 	}
 
 	warehouseID := domain.WarehouseID
-
 	warehouseObj, err := rs.warehouseServ.GetDataByID(warehouseID)
 
 	if err != nil {

@@ -14,7 +14,6 @@ type userService struct {
 
 // CreateToken implements domain.Service
 func (us userService) CreateToken(email, password string) (token string, err error) {
-
 	userObj, err := us.repository.GetByEmailPassword(email, password)
 
 	if err != nil {
@@ -97,7 +96,6 @@ func (us userService) DeleteData(id int) (err error) {
 	}
 
 	return nil
-	// return errConv.Conversion(errResp)
 }
 
 func NewUserService(repo domain.Repository, jwtAuth authMiddleware.ConfigJWT) domain.Service {
