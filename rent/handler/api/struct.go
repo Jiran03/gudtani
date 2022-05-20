@@ -3,7 +3,7 @@ package rentAPI
 import (
 	"time"
 
-	"github.com/Jiran03/gudhani/rent/domain"
+	"github.com/Jiran03/gudtani/rent/domain"
 )
 
 type RequestJSON struct {

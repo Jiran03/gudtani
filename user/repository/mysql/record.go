@@ -3,9 +3,9 @@ package repository
 import (
 	"time"
 
-	repoMySQLU "github.com/Jiran03/gudhani/product/repository/mysql"
-	"github.com/Jiran03/gudhani/user/domain"
-	repoMySQLW "github.com/Jiran03/gudhani/warehouse/repository/mysql"
+	repoMySQLU "github.com/Jiran03/gudtani/product/repository/mysql"
+	"github.com/Jiran03/gudtani/user/domain"
+	repoMySQLW "github.com/Jiran03/gudtani/warehouse/repository/mysql"
 	"gorm.io/gorm"
 )
 

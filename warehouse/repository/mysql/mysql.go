@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/Jiran03/gudhani/warehouse/domain"
+	"github.com/Jiran03/gudtani/warehouse/domain"
 	"gorm.io/gorm"
 )
 
@@ -12,9 +12,11 @@ type warehouseRepo struct {
 func (wr warehouseRepo) Create(domain domain.Warehouse) (warehouseObj domain.Warehouse, err error) {
 	record := fromDomain(domain)
 	err = wr.DB.Create(&record).Error
+
 	if err != nil {
 		return domain, err
 	}
+
 	return toDomain(record), nil
 }
 
@@ -36,6 +38,18 @@ func (wr warehouseRepo) Update(id int, domain domain.Warehouse) (warehouseObj do
 
 	warehouseObj = toDomain(newRecord)
 	return warehouseObj, nil
+}
+
+func (wr warehouseRepo) UpdateCapacity(id, newCapacity int) (err error) {
+	err = wr.DB.Table("warehouses").Where("id = ?", id).Updates(map[string]interface{}{
+		"capacity": newCapacity,
+	}).Error
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (wr warehouseRepo) Get() (warehouseObj []domain.Warehouse, err error) {

@@ -1,11 +1,10 @@
 package userAPI
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
-	"github.com/Jiran03/gudhani/user/domain"
+	"github.com/Jiran03/gudtani/user/domain"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 )
@@ -61,7 +60,6 @@ func (uh UserHandler) Register(ctx echo.Context) error {
 func (uh UserHandler) Login(ctx echo.Context) error {
 	var req RequestLoginJSON
 	ctx.Bind(&req)
-	fmt.Println(req)
 	errVal := uh.validation.Struct(req)
 
 	if errVal != nil {

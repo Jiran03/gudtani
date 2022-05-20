@@ -4,27 +4,26 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/Jiran03/gudhani/rent/domain"
-	"github.com/Jiran03/gudhani/rent/domain/mocks"
-	"github.com/Jiran03/gudhani/rent/service"
-	domainWarehouse "github.com/Jiran03/gudhani/warehouse/domain"
-	repoWarehouse "github.com/Jiran03/gudhani/warehouse/domain/mocks"
-	wareServ "github.com/Jiran03/gudhani/warehouse/service"
+	"github.com/Jiran03/gudtani/rent/domain"
+	"github.com/Jiran03/gudtani/rent/domain/mocks"
+	"github.com/Jiran03/gudtani/rent/service"
+	wareDomain "github.com/Jiran03/gudtani/warehouse/domain"
+	wareMock "github.com/Jiran03/gudtani/warehouse/domain/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
 
 var (
 	rentRepo         mocks.Repository
-	rentService      domain.Service
-	rentDomain       domain.Rent
-	warehouseRepo    repoWarehouse.Repository
-	warehouseDomain  domainWarehouse.Warehouse
-	warehouseService domainWarehouse.Service
+	warehouseService wareMock.Service
+
+	rentService     domain.Service
+	rentDomain      domain.Rent
+	warehouseDomain wareDomain.Warehouse
 )
 
 func TestInsertData(t *testing.T) {
-	rentService = service.NewRentService(&rentRepo)
+	rentService = service.NewRentService(&rentRepo, &warehouseService)
 	rentDomain = domain.Rent{
 		ID:          1,
 		ProductID:   1,
@@ -35,8 +34,7 @@ func TestInsertData(t *testing.T) {
 		TotalPrice:  140000,
 	}
 
-	warehouseService = wareServ.NewWarehouseService(&warehouseRepo)
-	warehouseDomain = domainWarehouse.Warehouse{
+	warehouseDomain = wareDomain.Warehouse{
 		Id:            1,
 		UserId:        1,
 		WarehouseName: "Gudang Jaya Abadi",
@@ -46,7 +44,8 @@ func TestInsertData(t *testing.T) {
 	}
 
 	t.Run("InsertData | Valid", func(t *testing.T) {
-		rentRepo.On("GetRentalPrice", mock.AnythingOfType("int")).Return(warehouseDomain.RentalPrice, nil).Once()
+		warehouseService.On("GetDataByID", mock.AnythingOfType("int")).Return(warehouseDomain, nil).Once()
+		warehouseService.On("UpdateDataCapacity", mock.AnythingOfType("int"), mock.AnythingOfType("int")).Return(nil)
 		rentRepo.On("Create", mock.AnythingOfType("domain.Rent")).Return(rentDomain, nil).Once()
 		rentObj, err := rentService.InsertData(rentDomain)
 
@@ -55,6 +54,8 @@ func TestInsertData(t *testing.T) {
 	})
 
 	t.Run("InsertData | Invalid", func(t *testing.T) {
+		warehouseService.On("GetDataByID", mock.AnythingOfType("int")).Return(wareDomain.Warehouse{}, errors.New("error")).Once()
+		warehouseService.On("UpdateDataCapacity", mock.AnythingOfType("int"), mock.AnythingOfType("int")).Return(errors.New("error"))
 		rentRepo.On("Create", mock.AnythingOfType("domain.Rent")).Return(domain.Rent{}, errors.New("error")).Once()
 		_, err := rentService.InsertData(rentDomain)
 
@@ -63,7 +64,7 @@ func TestInsertData(t *testing.T) {
 }
 
 func TestGetAllData(t *testing.T) {
-	rentService = service.NewRentService(&rentRepo)
+	rentService = service.NewRentService(&rentRepo, &warehouseService)
 	rentDomains := []domain.Rent{
 		{
 			ID:          1,
@@ -93,7 +94,7 @@ func TestGetAllData(t *testing.T) {
 }
 
 func TestGetDataByID(t *testing.T) {
-	rentService = service.NewRentService(&rentRepo)
+	rentService = service.NewRentService(&rentRepo, &warehouseService)
 	rentDomain = domain.Rent{
 		ID:          1,
 		ProductID:   1,
@@ -120,7 +121,7 @@ func TestGetDataByID(t *testing.T) {
 }
 
 func TestUpdateData(t *testing.T) {
-	rentService = service.NewRentService(&rentRepo)
+	rentService = service.NewRentService(&rentRepo, &warehouseService)
 	rentDomain = domain.Rent{
 		ID:          1,
 		ProductID:   1,
@@ -131,9 +132,20 @@ func TestUpdateData(t *testing.T) {
 		TotalPrice:  140000,
 	}
 
+	warehouseDomain = wareDomain.Warehouse{
+		Id:            1,
+		UserId:        1,
+		WarehouseName: "Gudang Jaya Abadi",
+		Capacity:      12,
+		RentalPrice:   8000,
+		Address:       "Palu",
+	}
+
 	t.Run("UpdateData | Valid", func(t *testing.T) {
 		rentRepo.On("GetByID", mock.AnythingOfType("int")).Return(rentDomain, nil).Once()
-		rentRepo.On("Update", mock.AnythingOfType("int"), rentDomain).Return(rentDomain, nil).Once()
+		warehouseService.On("GetDataByID", mock.AnythingOfType("int")).Return(warehouseDomain, nil).Once()
+		warehouseService.On("UpdateDataCapacity", mock.AnythingOfType("int"), mock.AnythingOfType("int")).Return(nil)
+		rentRepo.On("Update", mock.AnythingOfType("int"), mock.AnythingOfType("domain.Rent")).Return(rentDomain, nil).Once()
 		rentObj, err := rentService.UpdateData(rentDomain.ID, rentDomain)
 
 		assert.Nil(t, err)
@@ -141,8 +153,10 @@ func TestUpdateData(t *testing.T) {
 	})
 
 	t.Run("UpdateData | Invalid", func(t *testing.T) {
-		rentRepo.On("GetByID", mock.AnythingOfType("int")).Return(rentDomain, nil).Once()
-		rentRepo.On("Update", mock.AnythingOfType("int"), rentDomain).Return(domain.Rent{}, errors.New("error")).Once()
+		rentRepo.On("GetByID", mock.AnythingOfType("int")).Return(domain.Rent{}, errors.New("error")).Once()
+		warehouseService.On("GetDataByID", mock.AnythingOfType("int")).Return(wareDomain.Warehouse{}, errors.New("error")).Once()
+		warehouseService.On("UpdateDataCapacity", mock.AnythingOfType("int"), mock.AnythingOfType("int")).Return(errors.New("error"))
+		rentRepo.On("Update", mock.AnythingOfType("int"), mock.AnythingOfType("domain.Rent")).Return(domain.Rent{}, errors.New("error")).Once()
 		_, err := rentService.UpdateData(rentDomain.ID, rentDomain)
 
 		assert.Error(t, err)
@@ -150,7 +164,7 @@ func TestUpdateData(t *testing.T) {
 }
 
 func TestDeleteData(t *testing.T) {
-	rentService = service.NewRentService(&rentRepo)
+	rentService = service.NewRentService(&rentRepo, &warehouseService)
 	rentDomain = domain.Rent{
 		ID:          1,
 		ProductID:   1,

@@ -1,12 +1,12 @@
 openapi: 3.0.0
 info:
-  title: GudHani-Gudang Hasil Tani
+  title: gudtani-Gudang Hasil Tani
   description: Manajemen gudang hasil tani
   version: 1.0.0
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/jiranmuhammad7/gudhani/1.0.0
+    url: https://virtserver.swaggerhub.com/jiranmuhammad7/gudtani/1.0.0
 
 tags:
  - name: User

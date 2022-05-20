@@ -3,9 +3,9 @@ package routes
 import (
 	"errors"
 
-	authMiddleware "github.com/Jiran03/gudhani/auth/middleware"
-	errConv "github.com/Jiran03/gudhani/helper/error"
-	userAPI "github.com/Jiran03/gudhani/user/handler/api"
+	authMiddleware "github.com/Jiran03/gudtani/auth/middleware"
+	errConv "github.com/Jiran03/gudtani/helper/error"
+	userAPI "github.com/Jiran03/gudtani/user/handler/api"
 	"github.com/labstack/echo/v4"
 )
 

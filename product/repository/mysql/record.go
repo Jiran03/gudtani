@@ -3,8 +3,8 @@ package repository
 import (
 	"time"
 
-	"github.com/Jiran03/gudhani/product/domain"
-	repoMySQLR "github.com/Jiran03/gudhani/rent/repository/mysql"
+	"github.com/Jiran03/gudtani/product/domain"
+	repoMySQLR "github.com/Jiran03/gudtani/rent/repository/mysql"
 	"gorm.io/gorm"
 )
 

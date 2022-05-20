@@ -2,10 +2,9 @@ package service
 
 import (
 	"errors"
-	"fmt"
 
-	authMiddleware "github.com/Jiran03/gudhani/auth/middleware"
-	"github.com/Jiran03/gudhani/user/domain"
+	authMiddleware "github.com/Jiran03/gudtani/auth/middleware"
+	"github.com/Jiran03/gudtani/user/domain"
 )
 
 type userService struct {
@@ -15,7 +14,6 @@ type userService struct {
 
 // CreateToken implements domain.Service
 func (us userService) CreateToken(email, password string) (token string, err error) {
-	fmt.Println("usecase", email, password)
 	userObj, err := us.repository.GetByEmailPassword(email, password)
 
 	if err != nil {
@@ -30,7 +28,7 @@ func (us userService) CreateToken(email, password string) (token string, err err
 // InsertData implements domain.Service
 func (us userService) InsertData(domain domain.User) (userObj domain.User, err error) {
 	userObj, err = us.repository.Create(domain)
-	// errResp := errConv.Conversion(err)
+
 	if err != nil {
 		return userObj, err
 	}
@@ -41,7 +39,6 @@ func (us userService) InsertData(domain domain.User) (userObj domain.User, err e
 // UpdateData implements domain.Service
 func (us userService) UpdateData(id int, domain domain.User) (userObj domain.User, err error) {
 	user, errGetByID := us.repository.GetByID(id)
-	fmt.Println(user)
 
 	if errGetByID != nil {
 		return user, errGetByID
@@ -62,7 +59,6 @@ func (us userService) GetByEmailPassword(email, password string) (id int, role s
 	id = userObj.ID
 	role = userObj.Role
 	err = errRepo
-	fmt.Println("ini id dan role", id, role)
 
 	if err != nil {
 		return id, role, err
@@ -73,17 +69,21 @@ func (us userService) GetByEmailPassword(email, password string) (id int, role s
 
 func (us userService) GetAllData() (userObj []domain.User, err error) {
 	userObj, err = us.repository.Get()
+
 	if err != nil {
 		return userObj, err
 	}
+
 	return userObj, nil
 }
 
 func (us userService) GetByID(id int) (userObj domain.User, err error) {
 	userObj, err = us.repository.GetByID(id)
+
 	if err != nil {
 		return userObj, errors.New("not found")
 	}
+
 	return userObj, nil
 }
 
@@ -96,7 +96,6 @@ func (us userService) DeleteData(id int) (err error) {
 	}
 
 	return nil
-	// return errConv.Conversion(errResp)
 }
 
 func NewUserService(repo domain.Repository, jwtAuth authMiddleware.ConfigJWT) domain.Service {

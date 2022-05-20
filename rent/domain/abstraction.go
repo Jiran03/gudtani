@@ -13,7 +13,6 @@ type Service interface {
 type Repository interface {
 	Create(domain Rent) (rentObj Rent, err error)
 	Update(id int, domain Rent) (rentObj Rent, err error)
-	GetRentalPrice(id int) (rentalPrice int, err error)
 	Get() (rentObj []Rent, err error)
 	GetByID(id int) (rentObj Rent, err error)
 	Delete(id int) (err error)

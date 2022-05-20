@@ -1,10 +1,9 @@
 package authMiddleware
 
 import (
-	"fmt"
 	"time"
 
-	"github.com/Jiran03/gudhani/auth"
+	"github.com/Jiran03/gudtani/auth"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -37,7 +36,6 @@ func (cJWT *ConfigJWT) GenerateToken(userID int) string {
 	}
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, _ := t.SignedString([]byte(auth.SECRET_KEY))
-	fmt.Println(token)
 	return token
 }
 

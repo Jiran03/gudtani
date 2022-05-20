@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/Jiran03/gudhani/auth"
-	authMiddleware "github.com/Jiran03/gudhani/auth/middleware"
-	"github.com/Jiran03/gudhani/auth/routes"
-	"github.com/Jiran03/gudhani/config"
-	"github.com/Jiran03/gudhani/product"
-	"github.com/Jiran03/gudhani/rent"
-	"github.com/Jiran03/gudhani/user"
-	"github.com/Jiran03/gudhani/warehouse"
+	"github.com/Jiran03/gudtani/auth"
+	authMiddleware "github.com/Jiran03/gudtani/auth/middleware"
+	"github.com/Jiran03/gudtani/auth/routes"
+	"github.com/Jiran03/gudtani/config"
+	"github.com/Jiran03/gudtani/product"
+	"github.com/Jiran03/gudtani/rent"
+	"github.com/Jiran03/gudtani/user"
+	"github.com/Jiran03/gudtani/warehouse"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/spf13/viper"

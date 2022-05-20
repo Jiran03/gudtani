@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	domain "github.com/Jiran03/gudhani/rent/domain"
+	domain "github.com/Jiran03/gudtani/rent/domain"
 	mock "github.com/stretchr/testify/mock"
 
 	testing "testing"
@@ -81,27 +81,6 @@ func (_m *Repository) GetByID(id int) (domain.Rent, error) {
 		r0 = rf(id)
 	} else {
 		r0 = ret.Get(0).(domain.Rent)
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(int) error); ok {
-		r1 = rf(id)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// GetRentalPrice provides a mock function with given fields: id
-func (_m *Repository) GetRentalPrice(id int) (int, error) {
-	ret := _m.Called(id)
-
-	var r0 int
-	if rf, ok := ret.Get(0).(func(int) int); ok {
-		r0 = rf(id)
-	} else {
-		r0 = ret.Get(0).(int)
 	}
 
 	var r1 error

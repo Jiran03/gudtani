@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/Jiran03/gudhani/product/domain"
-	"github.com/Jiran03/gudhani/product/domain/mocks"
-	"github.com/Jiran03/gudhani/product/service"
+	"github.com/Jiran03/gudtani/product/domain"
+	"github.com/Jiran03/gudtani/product/domain/mocks"
+	"github.com/Jiran03/gudtani/product/service"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -16,15 +16,6 @@ var (
 	productService domain.Service
 	productDomain  domain.Product
 )
-
-// func TestMain(m *testing.M) {
-// 	productService = service.NewProductService(&productRepo)
-// 	productDomain = domain.Product{
-// 		Id:          1,
-// 		UserId:      1,
-// 		ProductType: "buah anggur",
-// 	}
-// }
 
 func TestInsertData(t *testing.T) {
 	productService = service.NewProductService(&productRepo)

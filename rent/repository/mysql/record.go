@@ -3,7 +3,7 @@ package repository
 import (
 	"time"
 
-	"github.com/Jiran03/gudhani/rent/domain"
+	"github.com/Jiran03/gudtani/rent/domain"
 	"gorm.io/gorm"
 )
 
@@ -44,12 +44,4 @@ func fromDomain(rec domain.Rent) Rent {
 		Status:      rec.Status,
 		TotalPrice:  rec.TotalPrice,
 	}
-}
-
-type RentalPrice struct {
-	RentalPrice int
-}
-
-type Capacity struct {
-	Capacity int
 }

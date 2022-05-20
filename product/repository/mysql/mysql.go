@@ -1,9 +1,7 @@
 package repository
 
 import (
-	"fmt"
-
-	"github.com/Jiran03/gudhani/product/domain"
+	"github.com/Jiran03/gudtani/product/domain"
 	"gorm.io/gorm"
 )
 
@@ -14,15 +12,16 @@ type productRepo struct {
 func (pr productRepo) Create(domain domain.Product) (productObj domain.Product, err error) {
 	record := fromDomain(domain)
 	err = pr.DB.Create(&record).Error
+
 	if err != nil {
 		return domain, err
 	}
+
 	return toDomain(record), nil
 }
 
 func (pr productRepo) Update(id int, domain domain.Product) (productObj domain.Product, err error) {
 	var newRecord Product
-	fmt.Println("id repo", id)
 	record := fromDomain(domain)
 	err = pr.DB.Model(&newRecord).Where("id = ?", id).Updates(map[string]interface{}{
 		"id":           id,
@@ -41,6 +40,7 @@ func (pr productRepo) Update(id int, domain domain.Product) (productObj domain.P
 func (pr productRepo) Get() (productObj []domain.Product, err error) {
 	var newRecord []Product
 	err = pr.DB.Find(&newRecord).Error
+
 	if err != nil {
 		return productObj, err
 	}
@@ -55,9 +55,11 @@ func (pr productRepo) Get() (productObj []domain.Product, err error) {
 func (pr productRepo) GetByID(id int) (userObj domain.Product, err error) {
 	var newRecord Product
 	err = pr.DB.Where("id = ?", id).First(&newRecord).Error
+
 	if err != nil {
 		return userObj, err
 	}
+
 	return toDomain(newRecord), nil
 }
 

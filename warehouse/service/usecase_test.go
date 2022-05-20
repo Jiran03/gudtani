@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/Jiran03/gudhani/warehouse/domain"
-	"github.com/Jiran03/gudhani/warehouse/domain/mocks"
-	"github.com/Jiran03/gudhani/warehouse/service"
+	"github.com/Jiran03/gudtani/warehouse/domain"
+	"github.com/Jiran03/gudtani/warehouse/domain/mocks"
+	"github.com/Jiran03/gudtani/warehouse/service"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -16,15 +16,6 @@ var (
 	warehouseService domain.Service
 	warehouseDomain  domain.Warehouse
 )
-
-// func TestMain(m *testing.M) {
-// 	warehouseService = service.NewWarehouseService(&warehouseRepo)
-// 	warehouseDomain = domain.Warehouse{
-// 		Id:          1,
-// 		UserId:      1,
-// 		WarehouseName: "buah Gudang",
-// 	}
-// }
 
 func TestInsertData(t *testing.T) {
 	warehouseService = service.NewWarehouseService(&warehouseRepo)
@@ -162,6 +153,28 @@ func TestUpdateData(t *testing.T) {
 		warehouseRepo.On("GetByID", mock.AnythingOfType("int")).Return(warehouseDomain, nil).Once()
 		warehouseRepo.On("Update", mock.AnythingOfType("int"), warehouseDomain).Return(domain.Warehouse{}, errors.New("error")).Once()
 		_, err := warehouseService.UpdateData(warehouseDomain.Id, warehouseDomain)
+
+		assert.Error(t, err)
+	})
+}
+
+func TestUpdateDataCapacity(t *testing.T) {
+	warehouseService = service.NewWarehouseService(&warehouseRepo)
+	warehouseDomain = domain.Warehouse{
+		Id:       1,
+		Capacity: 10,
+	}
+
+	t.Run("DeleteData | Valid", func(t *testing.T) {
+		warehouseRepo.On("UpdateCapacity", mock.AnythingOfType("int"), mock.AnythingOfType("int")).Return(nil).Once()
+		err := warehouseService.UpdateDataCapacity(warehouseDomain.Id, warehouseDomain.Capacity)
+
+		assert.Nil(t, err)
+	})
+
+	t.Run("DeleteData | Invalid", func(t *testing.T) {
+		warehouseRepo.On("UpdateCapacity", mock.AnythingOfType("int"), mock.AnythingOfType("int")).Return(errors.New("error")).Once()
+		err := warehouseService.UpdateDataCapacity(warehouseDomain.Id, warehouseDomain.Capacity)
 
 		assert.Error(t, err)
 	})

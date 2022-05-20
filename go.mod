@@ -1,4 +1,4 @@
-module github.com/Jiran03/gudhani
+module github.com/Jiran03/gudtani
 
 go 1.17
 

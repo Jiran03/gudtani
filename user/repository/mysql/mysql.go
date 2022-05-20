@@ -1,9 +1,7 @@
 package repository
 
 import (
-	"fmt"
-
-	"github.com/Jiran03/gudhani/user/domain"
+	"github.com/Jiran03/gudtani/user/domain"
 	"gorm.io/gorm"
 )
 
@@ -17,31 +15,22 @@ func (ur userRepo) Delete(id int) (err error) {
 	return ur.DB.Delete(&record, id).Error
 }
 
-// // GetByEmailPassword implements domain.Repository
-// func (ur userRepo) GetByEmailPassword(email string, password string) (id int, role string, err error) {
-// 	newRecord := User{}
-// 	err = ur.DB.Where("email = ? AND password = ?", email, password).Find(&newRecord).Error
-// 	fmt.Println("ini Repo", newRecord)
-// 	newRes := toDomain(newRecord)
-// 	fmt.Println("ini RepoRes", newRes)
-// 	id = newRes.Id
-// 	role = newRes.Role
-// 	return id, role, err
-// }
-// GetByEmailPassword implements domain.Repository
 func (ur userRepo) GetByEmailPassword(email, password string) (domain domain.User, err error) {
 	var newRecord User
-	fmt.Println("repo", email, password)
 	err = ur.DB.Where("email = ?", email).First(&newRecord).Error
+
+	if err != nil {
+		return domain, err
+	}
+
 	domain = toDomain(newRecord)
-	fmt.Println(domain)
-	return domain, err
+	return domain, nil
 }
 
 func (ur userRepo) Get() (userObj []domain.User, err error) {
 	var newRecord []User
 	err = ur.DB.Find(&newRecord).Error
-	fmt.Println(newRecord)
+
 	if err != nil {
 		return userObj, err
 	}
@@ -57,9 +46,11 @@ func (ur userRepo) Get() (userObj []domain.User, err error) {
 func (ur userRepo) GetByID(id int) (domain domain.User, err error) {
 	var newRecord User
 	err = ur.DB.Where("id = ?", id).First(&newRecord).Error
+
 	if err != nil {
 		return domain, err
 	}
+
 	return toDomain(newRecord), nil
 }
 
@@ -67,12 +58,16 @@ func (ur userRepo) GetByID(id int) (domain domain.User, err error) {
 func (ur userRepo) Create(domain domain.User) (userObj domain.User, err error) {
 	record := fromDomain(domain)
 	err = ur.DB.Create(&record).Error
-	return toDomain(record), err
+
+	if err != nil {
+		return userObj, err
+	}
+
+	return toDomain(record), nil
 }
 
 func (ur userRepo) Update(id int, domain domain.User) (userObj domain.User, err error) {
 	var newRecord User
-	fmt.Println("id repo", id)
 	record := fromDomain(domain)
 	err = ur.DB.Model(&newRecord).Where("id = ?", id).Updates(map[string]interface{}{
 		"id":       id,
@@ -83,8 +78,13 @@ func (ur userRepo) Update(id int, domain domain.User) (userObj domain.User, err 
 		"gender":   record.Gender,
 		"role":     record.Role,
 	}).Error
+
+	if err != nil {
+		return userObj, err
+	}
+
 	userObj = toDomain(newRecord)
-	return
+	return userObj, nil
 }
 
 func NewUserRepository(db *gorm.DB) domain.Repository {

@@ -4,10 +4,10 @@ import (
 	"errors"
 	"testing"
 
-	authMiddleware "github.com/Jiran03/gudhani/auth/middleware"
-	"github.com/Jiran03/gudhani/user/domain"
-	"github.com/Jiran03/gudhani/user/domain/mocks"
-	"github.com/Jiran03/gudhani/user/service"
+	authMiddleware "github.com/Jiran03/gudtani/auth/middleware"
+	"github.com/Jiran03/gudtani/user/domain"
+	"github.com/Jiran03/gudtani/user/domain/mocks"
+	"github.com/Jiran03/gudtani/user/service"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
