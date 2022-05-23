@@ -2,12 +2,12 @@ package config
 
 import (
 	"fmt"
+	"os"
 
 	repoProduct "github.com/Jiran03/gudtani/product/repository/mysql"
 	repoRent "github.com/Jiran03/gudtani/rent/repository/mysql"
 	repoUser "github.com/Jiran03/gudtani/user/repository/mysql"
 	repoWarehouse "github.com/Jiran03/gudtani/warehouse/repository/mysql"
-	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -24,11 +24,11 @@ var Conf Config
 
 func Init() {
 	Conf = Config{
-		DBNAME: viper.GetString(`DBNAME`),
-		DBUSER: viper.GetString(`DBUSER`),
-		DBPASS: viper.GetString(`DBPASS`),
-		DBHOST: viper.GetString(`DBHOST`),
-		DBPORT: viper.GetString(`DBPORT`),
+		DBNAME: os.Getenv("DBNAME"),
+		DBUSER: os.Getenv("DBUSER"),
+		DBPASS: os.Getenv("DBPASS"),
+		DBHOST: os.Getenv("DBHOST"),
+		DBPORT: os.Getenv("DBPORT"),
 	}
 }
 

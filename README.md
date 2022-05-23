@@ -19,4 +19,4 @@ Gunakan _command_ berikut untuk melakukan testing
 
 ## Build
 
-- Command untuk membuat image aplikasi menggunakan docker `docker build -t gudtani-v1.0.0 .`
+- Command untuk melakukan _build_ dan _run_ aplikasi menggunakan _docker compose_ `docker-compose up --build`

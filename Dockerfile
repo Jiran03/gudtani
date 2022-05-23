@@ -15,11 +15,12 @@ RUN go build -o api main.go
 FROM debian:11-slim
 
 COPY --from=builder /app/api /app/
+COPY --from=builder /app/config.env /app/
 
 WORKDIR /app
 
 #port yang diakses di luar
-EXPOSE 9500
+EXPOSE 9600
 
 #running command, gak bisa pake spasi, harus dipisah kek gini
 CMD ["./api"]
