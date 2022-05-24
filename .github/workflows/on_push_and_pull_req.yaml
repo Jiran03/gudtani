@@ -35,7 +35,7 @@ jobs:
           DBPASS: tes
         run: |
           go mod tidy
-          go test ./user/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-user.out && go tool cover -html=cover-user.out
-          go test ./product/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-product.out && go tool cover -html=cover-product.out
-          go test ./rent/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-rent.out && go tool cover -html=cover-rent.out
-          go test ./warehouse/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-warehouse.out && go tool cover -html=cover-warehouse.out
+          go test ./user/service/usecase_test.go -v -coverpkg=./... -coverprofile=./user/cover.out && go tool cover -html=./user/cover.out
+          go test ./product/service/usecase_test.go -v -coverpkg=./... -coverprofile=./product/cover.out && go tool cover -html=./product/cover.out
+          go test ./rent/service/usecase_test.go -v -coverpkg=./... -coverprofile=./rent/cover.out && go tool cover -html=./rent/cover.out
+          go test ./warehouse/service/usecase_test.go -v -coverpkg=./... -coverprofile=./warehouse/cover.out && go tool cover -html=./warehouse/cover.out
