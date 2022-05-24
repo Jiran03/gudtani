@@ -16,3 +16,7 @@ Gunakan _command_ berikut untuk melakukan testing
 - _Command_ untuk melakukan _test_ pada _product service_`go test ./product/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-product.out && go tool cover -html=cover-product.out`
 - _Command_ untuk melakukan _test_ pada _rent service_ `go test ./rent/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-rent.out && go tool cover -html=cover-rent.out`
 - _Command_ untuk melakukan _test_ pada _warehouse service_ `go test ./warehouse/service/usecase_test.go -v -coverpkg=./... -coverprofile=cover-warehouse.out && go tool cover -html=cover-warehouse.out`
+
+## Build
+
+- Command untuk melakukan _build_ dan _run_ aplikasi menggunakan _docker compose_ `docker-compose up --build`

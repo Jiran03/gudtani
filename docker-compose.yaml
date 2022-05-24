@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  gt-mysql-server:
+    image: mysql
+    environment:
+      - MYSQL_DATABASE=gudtani
+      - MYSQL_ROOT_PASSWORD=harusdiisi
+    ports:
+      - "33066:3306"
+  gudtani-1.0.0:
+    build: .
+    depends_on:
+      - gt-mysql-server
+    container_name: gt-1.0.0
+    ports:
+      - "9600:9500"
+    env_file:
+      - ./config.env

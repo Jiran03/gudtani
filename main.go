@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/Jiran03/gudtani/auth"
 	authMiddleware "github.com/Jiran03/gudtani/auth/middleware"
 	"github.com/Jiran03/gudtani/auth/routes"
@@ -9,17 +11,15 @@ import (
 	"github.com/Jiran03/gudtani/rent"
 	"github.com/Jiran03/gudtani/user"
 	"github.com/Jiran03/gudtani/warehouse"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/spf13/viper"
 )
 
 func init() {
-	viper.SetConfigFile(".env")
-	err := viper.ReadInConfig()
-
+	err := godotenv.Load("config.env")
 	if err != nil {
-		panic(err)
+		log.Fatal("Error loading .env file")
 	}
 }
 
